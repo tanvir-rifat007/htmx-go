@@ -1,0 +1,25 @@
+{{ define "index" }}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {{/* give me a htmx cdn */}}
+    <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    {{ template "form" .}}
+    <div id="contacts">{{ template "contacts" .}}</div>
+  </body>
+</html>
+
+{{ end }} {{ define "form" }}
+<form hx-post="/contacts" hx-target="#contacts">
+  <input type="text" name="name" placeholder="Name" />
+  <input type="email" name="email" id="email" placeholder="email" />
+  <button type="submit">Submit</button>
+</form>
+{{ end }} {{ define "contacts" }} Name:{{ .Name }} Email : {{ .Email }} {{ end
+}}
