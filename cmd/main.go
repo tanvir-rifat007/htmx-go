@@ -4,13 +4,21 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"sync"
 )
 
 
 type app struct{
 	logger *slog.Logger
+  Contacts []contact
+	mu sync.Mutex
 
 	
+}
+
+type contact struct{
+	Name string
+	Email string
 }
 
 func main(){

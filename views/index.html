@@ -21,5 +21,14 @@
   <input type="email" name="email" id="email" placeholder="email" />
   <button type="submit">Submit</button>
 </form>
-{{ end }} {{ define "contacts" }} Name:{{ .Name }} Email : {{ .Email }} {{ end
-}}
+
+{{ end }}
+
+<hr />
+
+{{ define "contacts" }} {{ range .Contacts }}
+<div>
+  <h3>{{ .Name }}</h3>
+  <p>{{ .Email }}</p>
+</div>
+{{ end }} {{ end }}

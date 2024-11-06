@@ -51,6 +51,13 @@ func (app *app) home(w http.ResponseWriter, r *http.Request){
 }
 
 
+
+
+
+
+
+
+
 func (app *app) contacts(w http.ResponseWriter, r *http.Request){
 	
 	 err:=r.ParseForm()
@@ -72,15 +79,22 @@ func (app *app) contacts(w http.ResponseWriter, r *http.Request){
 			http.Error(w,"internal server error",http.StatusInternalServerError)
 			return
 		}
+		// lock the mutex:
+		app.mu.Lock()
 
-		data:=struct{
-			Name string
-			Email string
+		app.Contacts = append(app.Contacts,contact{
+			Name: name,
+			Email: email,
+		})
+
+		// unlock the mutex:
+		app.mu.Unlock()
+
+		data:= struct{
+			Contacts []contact
 		}{
-			Name:name,
-			Email:email,
+			Contacts: app.Contacts,
 		}
-
 
 
 		ts.ExecuteTemplate(w,"contacts",data)
